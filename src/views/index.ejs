@@ -1,13 +1,38 @@
 <%- include('partials/header') %>
 
 <div class="container">
+  <% const currentSelectedPriority = typeof selectedPriority !== 'undefined' ? selectedPriority : null; %>
   <div class="page-header">
     <h2>ToDo 一覧</h2>
-    <a href="/todos/new" class="btn btn-primary">＋ 新規作成</a>
+    <div class="page-actions">
+      <form action="/todos" method="GET" class="filter-form">
+        <label for="priority">優先度</label>
+        <select id="priority" name="priority" class="form-control form-control-inline">
+          <option value="">すべて</option>
+          <% priorities.forEach(p => { %>
+            <option value="<%= p.value %>" <%= currentSelectedPriority === p.value ? 'selected' : '' %>>
+              <%= p.label %>
+            </option>
+          <% }); %>
+        </select>
+        <button type="submit" class="btn btn-secondary">絞り込み</button>
+        <% if (currentSelectedPriority !== null) { %>
+          <a href="/todos" class="btn btn-secondary">解除</a>
+        <% } %>
+      </form>
+      <a href="/todos/new" class="btn btn-primary">＋ 新規作成</a>
+    </div>
   </div>
 
   <% if (todos.length === 0) { %>
-    <p class="empty-message">ToDo がありません。新規作成してください。</p>
+    <% const selectedPriorityLabel = currentSelectedPriority !== null
+      ? (priorities.find(p => p.value === currentSelectedPriority) || {}).label
+      : null; %>
+    <p class="empty-message">
+      <%= currentSelectedPriority !== null
+        ? `優先度「${selectedPriorityLabel}」に一致する ToDo はありません。`
+        : 'ToDo がありません。新規作成してください。' %>
+    </p>
   <% } else { %>
     <table class="todo-table">
       <thead>

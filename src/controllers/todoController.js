@@ -1,7 +1,13 @@
 const db = require('../database');
 
 class TodoController {
-  getAll() {
+  getAll(priority) {
+    if (Number.isInteger(priority) && priority >= 1 && priority <= 3) {
+      return db
+        .prepare('SELECT * FROM todos WHERE priority = ? ORDER BY priority ASC, deadline ASC, id DESC')
+        .all(priority);
+    }
+
     return db.prepare('SELECT * FROM todos ORDER BY priority ASC, deadline ASC, id DESC').all();
   }
 
