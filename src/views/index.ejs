@@ -1,0 +1,56 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="page-header">
+    <h2>ToDo 一覧</h2>
+    <a href="/todos/new" class="btn btn-primary">＋ 新規作成</a>
+  </div>
+
+  <% if (todos.length === 0) { %>
+    <p class="empty-message">ToDo がありません。新規作成してください。</p>
+  <% } else { %>
+    <table class="todo-table">
+      <thead>
+        <tr>
+          <th>優先度</th>
+          <th>タイトル</th>
+          <th>期限</th>
+          <th>作成日時</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% todos.forEach(todo => { %>
+          <tr class="priority-<%= todo.priority %>">
+            <td class="priority-cell">
+              <% const p = priorities.find(p => p.value === todo.priority); %>
+              <span class="priority-badge priority-<%= todo.priority %>"><%= p ? p.label : '' %></span>
+            </td>
+            <td class="title-cell">
+              <strong><%= todo.title %></strong>
+              <% if (todo.content) { %>
+                <p class="content-preview"><%= todo.content.length > 50 ? todo.content.substring(0, 50) + '…' : todo.content %></p>
+              <% } %>
+            </td>
+            <td class="deadline-cell">
+              <% if (todo.deadline) { %>
+                <%= todo.deadline %>
+              <% } else { %>
+                <span class="no-value">-</span>
+              <% } %>
+            </td>
+            <td class="date-cell"><%= todo.created_at %></td>
+            <td class="actions-cell">
+              <a href="/todos/<%= todo.id %>/edit" class="btn btn-secondary">編集</a>
+              <form action="/todos/<%= todo.id %>/delete" method="POST" style="display:inline" onsubmit="return confirm('削除しますか？')">
+                <button type="submit" class="btn btn-danger">削除</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
