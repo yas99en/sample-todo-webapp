@@ -1,0 +1,27 @@
+{
+  "name": "sample-todo-webapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yas99en/sample-todo-webapp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/yas99en/sample-todo-webapp/issues"
+  },
+  "homepage": "https://github.com/yas99en/sample-todo-webapp#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1"
+  }
+}

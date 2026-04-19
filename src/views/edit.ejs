@@ -1,0 +1,55 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="page-header">
+    <h2>ToDo 編集</h2>
+    <a href="/todos" class="btn btn-secondary">← 一覧へ戻る</a>
+  </div>
+
+  <% if (error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <form action="/todos/<%= todo.id %>" method="POST" class="todo-form">
+    <div class="form-group">
+      <label for="title">タイトル <span class="required">*</span></label>
+      <input type="text" id="title" name="title" class="form-control"
+             value="<%= locals.values ? values.title : todo.title %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="content">内容</label>
+      <textarea id="content" name="content" class="form-control" rows="4"><%= locals.values ? values.content : (todo.content || '') %></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="deadline">期限</label>
+      <input type="date" id="deadline" name="deadline" class="form-control"
+             value="<%= locals.values ? values.deadline : (todo.deadline || '') %>">
+    </div>
+
+    <div class="form-group">
+      <label for="priority">優先度</label>
+      <select id="priority" name="priority" class="form-control">
+        <% priorities.forEach(p => { %>
+          <% const currentPriority = locals.values ? parseInt(locals.values.priority) : todo.priority; %>
+          <option value="<%= p.value %>" <%= currentPriority === p.value ? 'selected' : '' %>>
+            <%= p.label %>
+          </option>
+        <% }); %>
+      </select>
+    </div>
+
+    <div class="form-group meta-info">
+      <small>作成日時: <%= todo.created_at %></small><br>
+      <small>更新日時: <%= todo.updated_at %></small>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">更新</button>
+      <a href="/todos" class="btn btn-secondary">キャンセル</a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/footer') %>
