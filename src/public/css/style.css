@@ -37,12 +37,38 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
   margin-bottom: 24px;
 }
 
 .page-header h2 {
   font-size: 1.4rem;
   color: #333;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.filter-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-form label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.form-control-inline {
+  width: auto;
+  min-width: 120px;
 }
 
 /* Buttons */
@@ -231,4 +257,16 @@ main {
 
 .deadline-cell {
   white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .page-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }

@@ -10,8 +10,13 @@ const PRIORITIES = [
 
 // List all todos
 router.get('/', (req, res) => {
-  const todos = todoController.getAll();
-  res.render('index', { todos, priorities: PRIORITIES });
+  const requestedPriority = parseInt(req.query.priority, 10);
+  const selectedPriority = PRIORITIES.some(p => p.value === requestedPriority)
+    ? requestedPriority
+    : null;
+
+  const todos = todoController.getAll(selectedPriority);
+  res.render('index', { todos, priorities: PRIORITIES, selectedPriority });
 });
 
 // Show create form
